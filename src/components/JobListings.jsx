@@ -13,7 +13,7 @@ const JobListings = ({isHome}) => {
         const resultado = await fetch(apiUrl)
         const data = await resultado.json()
         setJobs(data.data)
-      }catch (error) {
+      } catch (error) {
         console.log ("Error tarendo datos",error)
       }finally{
         setCargando(false)
