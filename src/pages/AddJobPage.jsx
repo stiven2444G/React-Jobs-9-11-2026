@@ -1,25 +1,51 @@
 import React from 'react'
 import { useState } from 'react'
+import { useNavigate } from 'react-router'
+import {toast} from 'react-toastify'
 
 
-const AddJobPage = () => {
+const AddJobPage = ({ addJobSubmit }) => {
     const [title, setTitle] = useState('')
     const [description, setDescription] = useState('')
-    const [type, setType] = useState('')
-    const [salary, setSalary] = useState('')
+    const [type, setType] = useState('Full-Time')
+    const [salary, setSalary] = useState('Under $50K')
     const [location, setLocation] = useState('')
-    const [company, setCompany] = useState('')
+    const [companyName, setCompanyName] = useState('')
     const [companyDescription, setCompanyDescription] = useState('')
     const [contactEmail, setContactEmail] = useState('')
     const [contactPhone, setContactPhone] = useState('')
 
+    const navigate = useNavigate() 
+
+    const submitForm = (event) => {
+      event.preventDefault()
+      const newJob ={
+        title,
+        type,
+        location,
+        description,
+        salary,
+        company: {
+          name: companyName,
+          description: companyDescription,
+          contactEmail,
+          contactPhone
+        }
+      }
+      addJobSubmit(newJob)
+
+      toast.success("Job añanido correctamente")
+
+      navigate('/jobs')
+    }
+
   return (
+
     <section className="bg-indigo-50">
       <div className="container m-auto max-w-2xl py-24">
         <div
-          className="bg-white px-6 py-8 mb-4 shadow-md rounded-md border m-4 md:m-0"
-        >
-          <form>
+          className="bg-white px-6 py-8 mb-4 shadow-md rounded-md border m-4 md:m-0">
+          <form onSubmit={submitForm}>
             <h2 className="text-3xl text-center font-semibold mb-6">Add Job</h2>
 
             <div className="mb-4">
@@ -58,7 +84,7 @@ const AddJobPage = () => {
             </div>
             <div className="mb-4">
               <label
-                for="description"
+                htmlFor="description"
                 className="block text-gray-700 font-bold mb-2"
                 >Description</label
               >
@@ -74,9 +100,8 @@ const AddJobPage = () => {
             </div>
 
             <div className="mb-4">
-              <label for="type" className="block text-gray-700 font-bold mb-2"
-                >Salary</label
-              >
+              <label htmlFor="type" className="block text-gray-700 font-bold mb-2"
+                >Salary</label>
               <select
                 id="salary"
                 name="salary"
@@ -118,7 +143,7 @@ const AddJobPage = () => {
             <h3 className="text-2xl mb-5">Company Info</h3>
 
             <div className="mb-4">
-              <label for="company" className="block text-gray-700 font-bold mb-2"
+              <label htmlFor="company" className="block text-gray-700 font-bold mb-2"
                 >Company Name</label
               >
               <input
@@ -127,14 +152,14 @@ const AddJobPage = () => {
                 name="company"
                 className="border rounded w-full py-2 px-3"
                 placeholder="Company Name"
-                value={company}
-                onChange={(event) => setCompany(event.target.value)}
+                value={companyName}
+                onChange={(event) => setCompanyName(event.target.value)}
               />
             </div>
 
             <div className="mb-4">
               <label
-                for="company_description"
+                htmlFor="company_description"
                 className="block text-gray-700 font-bold mb-2"
                 >Company Description</label
               >
@@ -151,7 +176,7 @@ const AddJobPage = () => {
 
             <div className="mb-4">
               <label
-                for="contact_email"
+                htmlFor="contact_email"
                 className="block text-gray-700 font-bold mb-2"
                 >Contact Email</label
               >
@@ -168,7 +193,7 @@ const AddJobPage = () => {
             </div>
             <div className="mb-4">
               <label
-                for="contact_phone"
+                htmlFor="contact_phone"
                 className="block text-gray-700 font-bold mb-2"
                 >Contact Phone</label
               >
